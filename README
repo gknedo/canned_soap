@@ -1,6 +1,1 @@
-So it all started when i was needed to get the version of WhiteMagic.
-I 'bidalty' the soap4r gem but it dosnt handle full session so I've started to implement my own soap wraper for ruby .
-
-After Ive started to work I've notice more fetchers that I wanted but the gem could not do ( authonication , read complex wsdl and more)
-
-I will be very glad if you will find bugs and help me extend the framework
+soon
