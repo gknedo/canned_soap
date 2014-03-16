@@ -1,7 +1,6 @@
 = ruby2soap
 soon
 
-<<<<<<< HEAD
 Initialize the handler
 <tt>
 handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
@@ -42,5 +41,4 @@ NTLM Auth:
 With domain:
   handler.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password','domain')
 
->>>>>>> ab94fd3471bc185b2bf338ec1bb0dff76cc84d7f
 
