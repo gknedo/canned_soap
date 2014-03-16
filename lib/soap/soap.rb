@@ -48,15 +48,8 @@ module Soap
 		if(!data.nil?)
 			data.each do |key, value|
 				build_param(body['soap:Envelope']['soap:Body']["#{action.name}"],action,key,value)
-				#puts "#{key} - #{data_to_arr(value)}"
-				#body['soap:Envelope']['soap:Body']["#{action.name}"]["#{key}"] = ((value.is_a? Hash) ? data_to_arr(value) : [value])
-				#puts body['soap:Envelope']['soap:Body']["#{action.name}"]["#{key}"]
-				#(body['soap:Envelope']['soap:Body']["#{action.name}"]["#{key}"].merge!("xmlns:#{@name_space}" => action.data_contract)) unless action.data_contract.nil?
 			end
 		end
-		
-		#puts XmlSimple.xml_out(body['soap:Envelope']['soap:Body'], 'RootName' => nil)
-		#puts XmlSimple.xml_out(body, 'RootName' => nil)
 
 		XmlSimple.xml_out(body, 'RootName' => nil)
 	end

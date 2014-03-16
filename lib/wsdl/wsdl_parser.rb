@@ -49,7 +49,7 @@ module Wsdl
 				result = []
 
 				@@target_namespace = doc['targetNamespace']
-				should_read_from_xsd = !doc['types'].first['schema'].nil?
+				should_read_from_xsd = !doc['types'].first['schema'].first['import'].nil?
 
 				binding = doc['binding'].first
 				binding['operation'].each do |opp|
@@ -74,9 +74,9 @@ module Wsdl
 
 			def self.get_action_params(action_name,opp,should_read_from_xsd)	
 				if(should_read_from_xsd)
-					#get_action_params_from_xsd(action_name)
+					get_action_params_from_xsd(action_name)
 				else
-					#get_action_params_from_wsdl(action_name,opp)
+					get_action_params_from_wsdl(action_name,opp)
 				end
 			end
 

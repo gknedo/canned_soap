@@ -1,10 +1,20 @@
 soon
 
 Initialize the handler
-<tt>handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')</tt>
+<tt>
+handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
+</tt>
 
 Simple call
-<tt>handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')</tt>
+<tt>
+handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
+</tt>
+
+= Authentication
+available authentications
+1. NTLM
+2. Basic
+3. Digest	
 
 NTLM Auth
 <tt>
