@@ -1,23 +1,7 @@
 = ruby2soap
 soon
 
-Initialize the handler
-<tt>
-handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
-</tt>
-
-Simple call
-<tt>
-handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
-</tt>
-
-= Authentication
-available authentications
-1. NTLM
-2. Basic
-3. Digest	
-=======
-== Examples
+= Examples
 Initialize the handler:
   handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
 
@@ -28,9 +12,8 @@ Complex type :
   handler = WcfHandler.new('http://localhost:1659/Service1.svc')
   res = handler.GetDataUsingDataContract(:composite => {:BoolValue => true,:StringValue => "ruby2soap"})
 
-puts res.body # need to be .result and get the real result !
 
-== Authentication
+= Authentication
 Available authentications
 1. NTLM
 2. Basic
