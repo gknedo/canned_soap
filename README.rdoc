@@ -1,5 +1,13 @@
 = ruby2soap
-soon
+I've stated to work on this project when i was needed to call a WCF method that needed to get cookies from the intialization method.
+Unfortunately I didn't find any gem that could do it so I've stated to write my own implementation.
+
+During the work I stumbled in more feature that I needed ( authentication for instnace ).
+
+Any bug, question, missing feature plaece contact me on "ericfeldman93@gmail.com"
+
+Thank you, Eric.
+
 
 = Examples
 Initialize the handler:
