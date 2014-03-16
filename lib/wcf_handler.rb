@@ -41,7 +41,7 @@ class WcfHandler
 
 	private
 		def define_wcf_action(action)
-		 	self.class.send(:define_method ,action.name) do |data,*args|
+		 	self.class.send(:define_method ,action.name) do |data=nil,*args|
 				body = build_body(action, data)
 
 				res = send_wcf_action(action.soap_action,body,*args)

@@ -99,16 +99,18 @@ module Wsdl
 				element = @elements.select{|e| e['name'] == action_name}.first
 				sequence = element['complexType'].first['sequence'].first
 
-				sequence['element'].map do |e|
-					param = SoapParamter.new
-					param.name = e['name']
-					param.nullable = e['nillable']
-					param.type = e['type'].split(':').last
+				if !sequence['element'].nil?
+					sequence['element'].map do |e|
+						param = SoapParamter.new
+						param.name = e['name']
+						param.nullable = e['nillable']
+						param.type = e['type'].split(':').last
 
-					namespace_element = e.select{|key,value| key.match(/xmlns(.*)/)}.first
-					(param.namespace = namespace_element[1]) unless namespace_element.nil?
-					
-					param
+						namespace_element = e.select{|key,value| key.match(/xmlns(.*)/)}.first
+						(param.namespace = namespace_element[1]) unless namespace_element.nil?
+						
+						param
+					end
 				end
 			end
 	end
