@@ -27,11 +27,6 @@ module Wsdl
 			def self.get_wsdl_xml(extension)
 				uri = URI("#{@service}")
 
-				#req = Net::HTTP::Get.new("#{@service}?#{extension}")
-				#req["Accept"] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-				#req["Accept-Encoding"] = 'gzip,deflate,sdch'
-
-				#res = get_web_response2(req,uri)
 				res = get_web_response("#{@service}?#{extension}",
 										{"Accept" => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 										 "Accept-Encoding" => 'gzip,deflate,sdch'})
@@ -79,9 +74,9 @@ module Wsdl
 
 			def self.get_action_params(action_name,opp,should_read_from_xsd)	
 				if(should_read_from_xsd)
-					get_action_params_from_xsd(action_name)
+					#get_action_params_from_xsd(action_name)
 				else
-					get_action_params_from_wsdl(action_name,opp)
+					#get_action_params_from_wsdl(action_name,opp)
 				end
 			end
 

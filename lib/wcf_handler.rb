@@ -25,25 +25,12 @@ class WcfHandler
 
 		@uri = URI("#{service_url}")
 
-		#req = Net::HTTP::Get.new("#{service_url}?wsdl")
-		#req["Accept"] = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
-		#req["Accept-Encoding"] = 'gzip,deflate,sdch'
-
-		#res = get_web_response(req,@uri)
 		wsdl = WsdlParser.parse(service_url)
 		@service_address = wsdl.location_address
-		#puts get_action_from_wsdl(res.body).size
 
 		wsdl.actions.each do |action|
 			define_wcf_action(action)
-			#define_wcf_action(action,true)
 		end
-
-		#get_action_from_wsdl(res.body).each do |action,soap|
-		#	define_wcf_action(action,soap) 
-		#end
-
-		#@service_address = get_location_address(res.body)
 
 		# maybe create class for each service and the function will be there
 	end
