@@ -17,7 +17,7 @@ Initialize the handler:
 Simple objects:
   handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
   
-State full:
+Statefull:
   handler.Init(:userName => 'ericman93')
   handler.IncreaseScore() #the cookies saved automaticly
   
