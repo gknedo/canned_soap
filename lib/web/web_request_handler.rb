@@ -32,7 +32,7 @@ module Web
 		request.headers = headers
 		request.body = body
 
-		# change to user self.send
+		#TODO: change to user self.send('use_'+)
 		case args.first
 			when SecutryProtocol::NTLM
 				use_ntlm(request,*args)

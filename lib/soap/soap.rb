@@ -3,14 +3,14 @@ require_relative './soap_parameter'
 
 module Soap
 	def varibles_to_xml(veribles ,*args)
-		# check if the number of args is equels to the exptecrd
+		#TODO: check if the number of args is equels to the exptecrd
 
 		params = {}
 		args.each_with_index do |arg,i|
 			params[veribles[i]] = arg
 		end
 
-		XmlSimple.xml_out(params,'RootName' => nil)#.gsub(/\s+/,'').match('<root>(.*)</root>')[1]
+		XmlSimple.xml_out(params,'RootName' => nil)
 	end
 
 	def data_to_xml(object)
@@ -30,7 +30,6 @@ module Soap
 	end
 
 	def build_body(action , data)
-		#xml_data = data_to_xml(data)
 		@name_space = 'a'
 		body = {
 			'soap:Envelope' => {
