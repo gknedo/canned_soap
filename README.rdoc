@@ -1,12 +1,13 @@
 = ruby2soap
-I've stated to work on this project when i was needed to call a WCF method that needed to get cookies from the intialization method.
-Unfortunately I didn't find any gem that could do it so I've stated to write my own implementation.
+I started this project when I needed to call a WCF method which required cookies on init.
+Unfortunalty, I could not find any gem that will help me so, so I implemented it myself.
 
-During the work I stumbled in more feature that I needed ( authentication for instnace ).
+While working I noticed that I need more features - authentication, for example.
 
-Any bug, question, missing feature plaece contact me on "ericfeldman93@gmail.com"
+Please post any bugs, questions and feature requests using the 'Issues' page.
 
-Thank you, Eric.
+Thank you,
+Eric
 
 
 = Examples
