@@ -1,5 +1,7 @@
+= ruby2soap
 soon
 
+<<<<<<< HEAD
 Initialize the handler
 <tt>
 handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
@@ -15,10 +17,30 @@ available authentications
 1. NTLM
 2. Basic
 3. Digest	
+=======
+== Examples
+Initialize the handler:
+  handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
 
-NTLM Auth
-<tt>
-handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP',SecutryProtocol::NTLM,'user','password')
-or	
-handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP',SecutryProtocol::NTLM,'user','password','domain')
-</tt>
+Simple objects:
+  handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
+  
+Complex type :
+  handler = WcfHandler.new('http://localhost:1659/Service1.svc')
+  res = handler.GetDataUsingDataContract(:composite => {:BoolValue => true,:StringValue => "ruby2soap"})
+
+puts res.body # need to be .result and get the real result !
+
+== Authentication
+Available authentications
+1. NTLM
+2. Basic
+3. Digest	
+
+NTLM Auth:
+  handler.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password')
+With domain:
+  handler.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password','domain')
+
+>>>>>>> ab94fd3471bc185b2bf338ec1bb0dff76cc84d7f
+
