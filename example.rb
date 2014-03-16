@@ -8,21 +8,13 @@ def complex_object_example
 	})
 end
 
-##http://localhost:1659/Service1.svc
-#handler = WcfHandler.new('http://localhost:1659/Service1.svc')
-##handler.Initialize(:clientName => "ruby2soap")
-##handler.
-#res = handler.GetDataUsingDataContract(:composite => {
-#		:BoolValue => true,
-#		:StringValue => "ruby2soap"
-#	})
-#
-#puts res.body # need to be .result and get the real result !
-
-#handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
-#puts handler.ConversionRate(:FromCurrency => 'GBP', :ToCurrency => 'ILS').body
 def cookie_state_full_example
 	handler = WcfHandler.new('http://localhost:1659/Service1.svc')
 	handler.Init(:userName => 'ericman93')
 	handler.IncreaseScore()
+end
+
+def few_params_example
+	handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
+	handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
 end
