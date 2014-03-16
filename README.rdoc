@@ -16,6 +16,10 @@ Initialize the handler:
 Simple objects:
   handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
   
+State full:
+  handler.Init(:userName => 'ericman93')
+  handler.IncreaseScore() #the cookies saved automaticly
+  
 Complex type :
   handler = WcfHandler.new('http://localhost:1659/Service1.svc')
   res = handler.GetDataUsingDataContract(:composite => {:BoolValue => true,:StringValue => "ruby2soap"})
