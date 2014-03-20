@@ -69,7 +69,7 @@ module Wsdl
 
 					action.name = opp['name']
 					action.soap_action = opp['operation'].first['soapAction']
-					action.parameters = get_action_params(action.name,opp, should_read_from_xsd)
+					action.parameters = get_action_params(action.name, doc, should_read_from_xsd)
 
 					result << action
 				end
@@ -90,23 +90,34 @@ module Wsdl
 			# Return the parameters that the soap actiop requires as list of +SoapParamter+ objects
 			# Params :
 			# +action_name+:: the name of the soap action 
-			# +opp+:: the xml element in the wsdl of the soap action
+			# +doc+:: hash the represent the WSDL
 			# +should_read_from_xsd+:: boolean that indicates whether it should read the parameters from the wsdl or imported xsd
-			def self.get_action_params(action_name,opp,should_read_from_xsd)
+			def self.get_action_params(action_name,doc,should_read_from_xsd)
 				if(should_read_from_xsd)
 					get_action_params_from_xsd(action_name)
 				else
-					get_action_params_from_wsdl(action_name,opp)
+					get_action_params_from_wsdl(action_name,doc)
 				end
 			end
 
 			# Parse the soap action element in the wsdl and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
 			# Params:
 			# +action_name+:: the name of the soap action
-			# +opp+:: the xml element in the wsdl of the soap action
-			def self.get_action_params_from_wsdl(action_name, opp)
+			# +doc+:: hash the represent the WSDL
+			def self.get_action_params_from_wsdl(action_name, doc)
 				#puts opp['input'].first
-				nil #soon
+				if @schema.nil?
+					@schema =  doc['types'].first['schema'].first
+				end
+
+				action_element = @schema['element'].select{|e| e['name'] == action_name}.first
+				action_params_elements = action_element['complexType'].first['sequence'].first['element']
+
+				action_params_elements.map do |element|
+					SoapParamter.parse(element) do |param|
+						param.nullable = ['minOccurs'] == 0
+					end
+				end
 			end
 
 			# Parse the imported xsd and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
@@ -120,24 +131,19 @@ module Wsdl
 
 					@elements = doc['element']
 
-					return nil if @elements.nil? # the page dose not have shceme
+					# the page dose not have imported shceme
+					return nil if @elements.nil? 
 				end
 
 				element = @elements.select{|e| e['name'] == action_name}.first
 				sequence = element['complexType'].first['sequence'].first
 
-				#TODO: Differet method, maby in the SoapParamer (SoapParamer.parse)
-				if !sequence['element'].nil?
-					sequence['element'].map do |e|
-						param = SoapParamter.new
-						param.name = e['name']
+				return [] if sequence['element'].nil?
+				sequence['element'].map do |e|
+					SoapParamter.parse(e) do |param|
 						param.nullable = e['nillable']
-						param.type = e['type'].split(':').last
-
 						namespace_element = e.select{|key,value| key.match(/xmlns(.*)/)}.first
 						(param.namespace = namespace_element[1]) unless namespace_element.nil?
-						
-						param
 					end
 				end
 			end
