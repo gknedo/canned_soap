@@ -17,7 +17,13 @@ include Wsdl
 #	#include file.gsub('.rb','')
 #}
 
+# Handle the requests to the service
 class WcfHandler
+	# C'tor.
+	# Parse the wsdl and create a method to each WCF/WebService method
+	# Params:
+	# +service_url+:: the url of your service
+	# +save_cookeis+:: should save cookies of the result
 	def initialize(service_url,save_cookeis = true)
 		HTTPI.log = false
 		@cookies = []
@@ -35,11 +41,15 @@ class WcfHandler
 		# maybe create class for each service and the function will be there
 	end
 
+	# Return the the current cookie set
 	def cookies
 		@cookies
 	end
 
 	private
+		# Define a method to the +WcfHandler+ object base on the method from the WSDL
+		# Params:
+		# +action+:: +SoapAction+ that have all the info about the method from the WSDL
 		def define_wcf_action(action)
 		 	self.class.send(:define_method ,action.name) do |data=nil,*args|
 				body = build_body(action, data)
@@ -62,6 +72,11 @@ class WcfHandler
 			#create new method that takes the data and user and password and user ntlm
 		end
 
+		# Call to wcf method
+		# Params:
+		# +soap_action+:: the value of the SOAPAction header
+		# +body+:: the body of the HTTP request
+		# +args+:: metadata that indicate wich autountication to use
 		def send_wcf_action(soap_action,body,*args)
 			#req = Net::HTTP::Post.new(@uri.path)
 			#req = Net::HTTP::Post.new(@service_address)

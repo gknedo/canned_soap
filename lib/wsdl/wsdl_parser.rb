@@ -6,25 +6,33 @@ include Web
 
 module Wsdl
 	class WsdlParser
+		# Parse the service wsdl to a +Wsdl+ object
+		# Params :
+		# +service+:: the url of the service
 		def self.parse(service)
 			@service = service
-			wsdl_xml = get_wsdl_xml('wsdl')
+			wsdl_xml = get_serivce_data('wsdl')
 			doc = XmlSimple.xml_in(wsdl_xml)
 
 			res = Wsdl.new
-			res.actions = get_action_from_wsdl(doc)
+			res.actions = get_soap_actions(doc)
 			res.location_address = get_location_address(doc)
 			res.target_namespace = doc['targetNamespace']
 
 			res
 		end
 
+		# Return the target namespace of the last wsdl parser.
+		# TODO: Remove this method and user tel +Wsdl+ it self to get the target namespace
 		def self.target_namespace
 			@@target_namespace
 		end
 
 		private
-			def self.get_wsdl_xml(extension)
+			# Return the service data for specified extension (wsdl, xsd=xsd0, etc)
+			# Params:
+			# +extension+:: the extension the query the service with (wsdl, xsd=xsd0, etc)
+			def self.get_serivce_data(extension)
 				uri = URI("#{@service}")
 
 				res = get_web_response("#{@service}?#{extension}",
@@ -33,9 +41,10 @@ module Wsdl
 				res.body
 			end
 
+			# ???
 			def self.get_action_datacontact(action_name)
 				if @xsd_namespace.nil?
-					xsd0 = get_wsdl_xml('xsd=xsd0')
+					xsd0 = get_serivce_data('xsd=xsd0')
 					doc = XmlSimple.xml_in(xsd0)
 
 					import = doc['import']
@@ -45,7 +54,10 @@ module Wsdl
 				@xsd_namespace
 			end
 
-			def self.get_action_from_wsdl(doc)
+			# Return list of +SoapAction+ 
+			# Params:
+			# +doc+:: +Hash+ that represent the wsdl xml
+			def self.get_soap_actions(doc)
 				result = []
 
 				@@target_namespace = doc['targetNamespace']
@@ -65,6 +77,9 @@ module Wsdl
 				result
 			end
 
+			# Return the location address of the service
+			# Params:
+			# +doc+:: +Hash+ that represent the wsdl xml
 			def self.get_location_address(doc)
 				service = doc['service']
 				location = service.first['port'].first['address'].first['location']
@@ -72,7 +87,12 @@ module Wsdl
 				location
 			end
 
-			def self.get_action_params(action_name,opp,should_read_from_xsd)	
+			# Return the parameters that the soap actiop requires as list of +SoapParamter+ objects
+			# Params :
+			# +action_name+:: the name of the soap action 
+			# +opp+:: the xml element in the wsdl of the soap action
+			# +should_read_from_xsd+:: boolean that indicates whether it should read the parameters from the wsdl or imported xsd
+			def self.get_action_params(action_name,opp,should_read_from_xsd)
 				if(should_read_from_xsd)
 					get_action_params_from_xsd(action_name)
 				else
@@ -80,15 +100,22 @@ module Wsdl
 				end
 			end
 
+			# Parse the soap action element in the wsdl and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
+			# Params:
+			# +action_name+:: the name of the soap action
+			# +opp+:: the xml element in the wsdl of the soap action
 			def self.get_action_params_from_wsdl(action_name, opp)
 				#puts opp['input'].first
 				nil #soon
 			end
 
+			# Parse the imported xsd and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
+			# Params:
+			# +action_name+:: the name of the soap action
 			def self.get_action_params_from_xsd(action_name)
 				if @elements.nil?
 					#@elements = {}
-					xsd0 = get_wsdl_xml('xsd=xsd0')
+					xsd0 = get_serivce_data('xsd=xsd0')
 					doc = XmlSimple.xml_in(xsd0)
 
 					@elements = doc['element']
@@ -99,6 +126,7 @@ module Wsdl
 				element = @elements.select{|e| e['name'] == action_name}.first
 				sequence = element['complexType'].first['sequence'].first
 
+				#TODO: Differet method, maby in the SoapParamer (SoapParamer.parse)
 				if !sequence['element'].nil?
 					sequence['element'].map do |e|
 						param = SoapParamter.new

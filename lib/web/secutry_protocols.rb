@@ -1,4 +1,5 @@
 module Web
+	# the secutry protocols that have support 
 	module SecutryProtocol
 		NTLM = 0
 		GGS_API = 1

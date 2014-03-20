@@ -2,21 +2,9 @@ require_relative './soap_action'
 require_relative './soap_parameter'
 
 module Soap
-	def varibles_to_xml(veribles ,*args)
-		#TODO: check if the number of args is equels to the exptecrd
-
-		params = {}
-		args.each_with_index do |arg,i|
-			params[veribles[i]] = arg
-		end
-
-		XmlSimple.xml_out(params,'RootName' => nil)
-	end
-
-	def data_to_xml(object)
-		varibles_to_xml(object.keys,object.values)
-	end
-
+	# Covert the data to hash
+	# Params:
+	# +object+:: the object to covert to hash
 	def data_to_arr(object)
 		return '' if object.nil?
 		return [object] unless object.is_a? Hash
@@ -29,6 +17,10 @@ module Soap
 		params
 	end
 
+	# Build the body that need to be send to the service when calling the soap action and return the result
+	# Params :
+	# +action+:: +SoapAction+ object that keep all the data about the soap action
+	# +data+:: the user data that he want to send to the server
 	def build_body(action , data)
 		@name_space = 'a'
 		body = {
@@ -53,8 +45,12 @@ module Soap
 		XmlSimple.xml_out(body, 'RootName' => nil)
 	end
 
+	# Parse the server response to hash that the user will work eith
+	# Params:
+	# +res+:: +HTTPI::Response+ object that represent the response from the server
+	# +action_name+:: the name of the action that the response is belongs to 
 	def get_wcf_response(res,action_name)
-		#result = XmlSimple.xml_in(res.body)
+		#res.error?
 		if res.code.to_i >= 400
 			#error
 			#fault = result['Body'].first['Fault']
@@ -68,6 +64,12 @@ module Soap
 		end
 	end
 
+	# Adds to the action element in the +Hash+ and add the user send data to the hash
+	# Params:
+	# +action_element+:: the action element in the hash of the body
+	# +action+:: +SoapAction+ object that keep all the data about the soap action
+	# +key+:: the name of the parameter
+	# +value+:: the value of the parameter
 	def build_param(action_element,action,key,value)
 		if(action.parameters.nil?)
 			action_element["#{key}"] = ((value.is_a? Hash) ? data_to_arr(value) : [value])
