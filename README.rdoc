@@ -25,6 +25,10 @@ Complex type :
   handler = WcfHandler.new('http://localhost:1659/Service1.svc')
   res = handler.GetDataUsingDataContract(:composite => {:BoolValue => true,:StringValue => "ruby2soap"})
 
+=== Result
+The object that the soap service function returns is actually a HTTP response with 'result' function that returns the actual value. 
+If the value is a complex object, then it would be represented as a hash
+
 
 = Authentication
 Available authentications
