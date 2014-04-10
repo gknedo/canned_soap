@@ -1,5 +1,6 @@
 require_relative './soap_action'
 require_relative './soap_parameter'
+require 'xmlsimple'
 
 module Soap
 	# Covert the data to hash
@@ -52,15 +53,15 @@ module Soap
 	def get_wcf_response(res,action_name)
 		#res.error?
 		if res.code.to_i >= 400
-			#error
-			#fault = result['Body'].first['Fault']
-			#fault.first['faultstring'].first['content']
-			'error'
+			'error please see body'
 		else
-			#m = res.body.match("<#{action_name}Result>(.*)</#{action_name}Result>")
-			#return nil if m.nil?
+			result = XmlSimple.xml_in(res.body)['Body'].first["#{action_name}Response"].first["#{action_name}Result"].first
+			if result.class == Hash
+				# I dont want to return the result xml attributes
+				result.select!{|k,v| v.class == Array}
+			end
 
-			#XmlSimple.xml_in(m[0])
+			result
 		end
 	end
 

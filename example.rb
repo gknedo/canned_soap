@@ -25,4 +25,10 @@ def ntlm_example
 end
 
 
-puts few_params_example.body
+#puts few_params_example.body
+handler = WcfHandler.new('http://localhost:1659/Service1.svc')
+res = handler.GetDataUsingDataContract(:composite => {
+	:BoolValue => true,
+	:StringValue => "ruby2soap"
+})
+puts res.result
