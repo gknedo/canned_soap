@@ -1,4 +1,4 @@
-require_relative 'lib\ruby2soap'
+require 'ruby2soap'
 
 def complex_object_example
 	handler = Ruby2Soap.new('http://localhost:1659/Service1.svc')
