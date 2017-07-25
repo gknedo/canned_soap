@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/canned_soap.svg)](https://badge.fury.io/rb/canned_soap)
 # CannedSoap
 
 A rewrite version of the [ruby2soap](https://github.com/ericman93/ruby2soap) gem.
