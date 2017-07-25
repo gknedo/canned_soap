@@ -1,0 +1,9 @@
+version: '3'
+volumes:
+  gems:
+services:
+  gem:
+    image: ruby:2.4.1
+    volumes:
+      - gems:/usr/local/bundle
+      - .:/opt/gem
