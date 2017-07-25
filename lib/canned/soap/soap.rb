@@ -78,7 +78,7 @@ module Canned::Soap
 			current_param = action.parameters.select{|p| p.name.upcase == key.to_s.upcase}.first
 			action_element["#{key}"] = ((value.is_a? Hash) ? data_to_arr(value) : [value])
 
-			if !current_param.namespace.nil?
+			if current_param && current_param.namespace
 				action_element["#{key}"].merge!("xmlns:#{@name_space}" => current_param.namespace)
 			end
 		end
