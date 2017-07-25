@@ -1,6 +1,6 @@
 require 'net/http'
 require 'xmlsimple'
-require 'canned/wsdl/wsdl'
+require 'canned_soap/wsdl/wsdl'
 include Wsdl
 #require 'soap/soap'
 #include Soap
@@ -18,7 +18,7 @@ include Wsdl
 #}
 
 # Handle the requests to the service
-module Canned
+module CannedSoap
 	class WcfHandler
 		# C'tor.
 		# Parse the wsdl and create a method to each WCF/WebService method

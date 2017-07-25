@@ -1,8 +1,8 @@
 require 'httpi'
-require 'canned/web/security_protocol'
+require 'canned_soap/web/security_protocol'
 
 # Handle all the communication to the service
-module Canned::Web
+module CannedSoap::Web
 	# Send Http get rquest to a url and return his result via +HTTPI+
 	# Params:
 	# +url+:: the url to send the request to

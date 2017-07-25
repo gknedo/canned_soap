@@ -1,8 +1,8 @@
-require 'canned/soap/soap_action'
-require 'canned/soap/soap_parameter'
+require 'canned_soap/soap/soap_action'
+require 'canned_soap/soap/soap_parameter'
 require 'xmlsimple'
 
-module Canned::Soap
+module CannedSoap::Soap
 	# Covert the data to hash
 	# Params:
 	# +object+:: the object to covert to hash

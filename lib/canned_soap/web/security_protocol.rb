@@ -1,4 +1,4 @@
-module Canned::Web
+module CannedSoap::Web
 	# the secutry protocols that have support
 	module SecurityProtocol
 		NTLM = 0

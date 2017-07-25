@@ -1,5 +1,5 @@
 # Handle the requests to the service
-module Canned
+module CannedSoap
 	class Client
 		# C'tor.
 		# Parse the wsdl and create a method to each WCF/WebService method

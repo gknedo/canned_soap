@@ -1,4 +1,4 @@
-module Canned::Soap
+module CannedSoap::Soap
 	class SoapParamter
 		attr_accessor :name, :nullable, :type, :namespace
 

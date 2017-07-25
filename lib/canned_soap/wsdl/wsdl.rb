@@ -1,6 +1,6 @@
-require 'canned/wsdl/wsdl_parser'
+require 'canned_soap/wsdl/wsdl_parser'
 
-module Canned::Wsdl
+module CannedSoap::Wsdl
 	class Wsdl
 		attr_accessor :actions, :target_namespace, :location_address
 	end

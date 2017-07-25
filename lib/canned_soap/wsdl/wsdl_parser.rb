@@ -1,10 +1,10 @@
 require 'xmlsimple'
-require 'canned/soap/soap'
-require 'canned/web/web_request_handler'
-include Canned::Soap
-include Canned::Web
+require 'canned_soap/soap/soap'
+require 'canned_soap/web/web_request_handler'
+include CannedSoap::Soap
+include CannedSoap::Web
 
-module Canned::Wsdl
+module CannedSoap::Wsdl
 	class WsdlParser
 		# Parse the service wsdl to a +Wsdl+ object
 		# Params :

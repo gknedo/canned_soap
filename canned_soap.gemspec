@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "canned/version"
+require "canned_soap/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "canned"
-  spec.version       = Canned::VERSION
+  spec.name          = "canned_soap"
+  spec.version       = CannedSoap::VERSION
   spec.authors       = ["Gustavo Canedo"]
   spec.email         = ["gknedo@gmail.com"]
 
   spec.summary       = "Communication between ruby and soap services"
-  spec.homepage      = 'https://github.com/gknedo/canned'
+  spec.homepage      = 'https://github.com/gknedo/canned_soap'
 
   spec.license       = "MIT"
 
