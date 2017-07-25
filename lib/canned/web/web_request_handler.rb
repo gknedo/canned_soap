@@ -1,8 +1,8 @@
 require 'httpi'
-require_relative './secutry_protocols'
+require 'canned/web/security_protocol'
 
 # Handle all the communication to the service
-module Web
+module Canned::Web
 	# Send Http get rquest to a url and return his result via +HTTPI+
 	# Params:
 	# +url+:: the url to send the request to
@@ -29,13 +29,13 @@ module Web
 
 		#TODO: change to user self.send('use_'+)
 		case args.first
-			when SecutryProtocol::NTLM
+		when SecurityProtocol::NTLM
 				use_ntlm(request,*args)
-			when SecutryProtocol::GGS_API
+			when SecurityProtocol::GGS_API
 				use_kerberos(request)
-			when SecutryProtocol::BASIC
+			when SecurityProtocol::BASIC
 				use_basic(request,*args)
-			when SecutryProtocol::DIGEST
+			when SecurityProtocol::DIGEST
 				use_digest(request,*args)
 		end
 

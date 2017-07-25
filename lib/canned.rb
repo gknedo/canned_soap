@@ -1,5 +1,5 @@
-require "canned/version"
-
-module Canned
-  # Your code goes here...
-end
+require 'net/http'
+require 'xmlsimple'
+require 'canned/wsdl/wsdl'
+include Canned::Wsdl
+require 'canned/client'

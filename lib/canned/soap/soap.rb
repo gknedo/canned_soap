@@ -1,8 +1,8 @@
-require_relative './soap_action'
-require_relative './soap_parameter'
+require 'canned/soap/soap_action'
+require 'canned/soap/soap_parameter'
 require 'xmlsimple'
 
-module Soap
+module Canned::Soap
 	# Covert the data to hash
 	# Params:
 	# +object+:: the object to covert to hash
@@ -49,7 +49,7 @@ module Soap
 	# Parse the server response to hash that the user will work eith
 	# Params:
 	# +res+:: +HTTPI::Response+ object that represent the response from the server
-	# +action_name+:: the name of the action that the response is belongs to 
+	# +action_name+:: the name of the action that the response is belongs to
 	def get_wcf_response(res,action_name)
 		#res.error?
 		if res.code.to_i >= 400
@@ -74,15 +74,13 @@ module Soap
 	def build_param(action_element,action,key,value)
 		if(action.parameters.nil?)
 			action_element["#{key}"] = ((value.is_a? Hash) ? data_to_arr(value) : [value])
-		else		
+		else
 			current_param = action.parameters.select{|p| p.name.upcase == key.to_s.upcase}.first
 			action_element["#{key}"] = ((value.is_a? Hash) ? data_to_arr(value) : [value])
-	
+
 			if !current_param.namespace.nil?
 				action_element["#{key}"].merge!("xmlns:#{@name_space}" => current_param.namespace)
 			end
 		end
 	end
 end
-
-

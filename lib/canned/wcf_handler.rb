@@ -1,6 +1,6 @@
 require 'net/http'
 require 'xmlsimple'
-require_relative 'wsdl\wsdl'
+require 'canned/wsdl/wsdl'
 include Wsdl
 #require 'soap/soap'
 #include Soap
@@ -11,42 +11,43 @@ include Wsdl
 #include WsdlParser
 #include Soap
 
-#Dir["lib/*.rb"].each {|file| 
+#Dir["lib/*.rb"].each {|file|
 #	require file
 #	#require_relative file# if file != 'wcf_handler'
 #	#include file.gsub('.rb','')
 #}
 
 # Handle the requests to the service
-class WcfHandler
-	# C'tor.
-	# Parse the wsdl and create a method to each WCF/WebService method
-	# Params:
-	# +service_url+:: the url of your service
-	# +save_cookeis+:: should save cookies of the result
-	def initialize(service_url,save_cookeis = true)
-		HTTPI.log = false
-		@cookies = []
-		@save_cookeis = save_cookeis
+module Canned
+	class WcfHandler
+		# C'tor.
+		# Parse the wsdl and create a method to each WCF/WebService method
+		# Params:
+		# +service_url+:: the url of your service
+		# +save_cookeis+:: should save cookies of the result
+		def initialize(service_url,save_cookeis = true)
+			HTTPI.log = false
+			@cookies = []
+			@save_cookeis = save_cookeis
 
-		@uri = URI("#{service_url}")
+			@uri = URI("#{service_url}")
 
-		wsdl = WsdlParser.parse(service_url)
-		@service_address = wsdl.location_address
+			wsdl = Wsdl::WsdlParser.parse(service_url)
+			@service_address = wsdl.location_address
 
-		wsdl.actions.each do |action|
-			define_wcf_action(action)
+			wsdl.actions.each do |action|
+				define_wcf_action(action)
+			end
+
+			# maybe create class for each service and the function will be there
 		end
 
-		# maybe create class for each service and the function will be there
-	end
+		# Return the the current cookie set
+		def cookies
+			@cookies
+		end
 
-	# Return the the current cookie set
-	def cookies
-		@cookies
-	end
-
-	private
+		private
 		# Define a method to the +WcfHandler+ object base on the method from the WSDL
 		# Params:
 		# +action+:: +SoapAction+ that have all the info about the method from the WSDL
@@ -56,7 +57,7 @@ class WcfHandler
 
 				res = send_wcf_action(action.soap_action,body,*args)
 				(@cookies << res.headers["Set-Cookie"]) if @save_cookeis
-				
+
 				result = get_wcf_response(res,action.name)
 				res.singleton_class.send(:define_method,:result) do
 					result
@@ -96,5 +97,6 @@ class WcfHandler
 							  "Content-Type" => "text/xml; charset=utf-8",
 							  "Cookie" => cookies},
 							  body, *args)
-		end 
+		end
+	end
 end

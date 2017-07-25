@@ -1,10 +1,10 @@
 require 'xmlsimple'
-require_relative '..\soap\soap'
-require_relative '..\web\web_request_handler'
-include Soap
-include Web
+require 'canned/soap/soap'
+require 'canned/web/web_request_handler'
+include Canned::Soap
+include Canned::Web
 
-module Wsdl
+module Canned::Wsdl
 	class WsdlParser
 		# Parse the service wsdl to a +Wsdl+ object
 		# Params :
@@ -54,7 +54,7 @@ module Wsdl
 				@xsd_namespace
 			end
 
-			# Return list of +SoapAction+ 
+			# Return list of +SoapAction+
 			# Params:
 			# +doc+:: +Hash+ that represent the wsdl xml
 			def self.get_soap_actions(doc)
@@ -89,7 +89,7 @@ module Wsdl
 
 			# Return the parameters that the soap actiop requires as list of +SoapParamter+ objects
 			# Params :
-			# +action_name+:: the name of the soap action 
+			# +action_name+:: the name of the soap action
 			# +doc+:: hash the represent the WSDL
 			# +should_read_from_xsd+:: boolean that indicates whether it should read the parameters from the wsdl or imported xsd
 			def self.get_action_params(action_name,doc,should_read_from_xsd)
@@ -100,7 +100,7 @@ module Wsdl
 				end
 			end
 
-			# Parse the soap action element in the wsdl and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
+			# Parse the soap action element in the wsdl and return the parameters that the soap actiop requires as list of +SoapParamter+ objects
 			# Params:
 			# +action_name+:: the name of the soap action
 			# +doc+:: hash the represent the WSDL
@@ -120,7 +120,7 @@ module Wsdl
 				end
 			end
 
-			# Parse the imported xsd and return the parameters that the soap actiop requires as list of +SoapParamter+ objects 
+			# Parse the imported xsd and return the parameters that the soap actiop requires as list of +SoapParamter+ objects
 			# Params:
 			# +action_name+:: the name of the soap action
 			def self.get_action_params_from_xsd(action_name)
@@ -132,7 +132,7 @@ module Wsdl
 					@elements = doc['element']
 
 					# the page dose not have imported shceme
-					return nil if @elements.nil? 
+					return nil if @elements.nil?
 				end
 
 				element = @elements.select{|e| e['name'] == action_name}.first

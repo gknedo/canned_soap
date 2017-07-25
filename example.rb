@@ -16,7 +16,7 @@ def cookie_state_full_example
 end
 
 def few_params_example
-	handler = Ruby2Soap.new('http://www.webservicex.net/CurrencyConvertor.asmx')
+	handler = Canned::Client.new('http://www.webservicex.net/CurrencyConvertor.asmx')
 	handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP').result
 end
 
