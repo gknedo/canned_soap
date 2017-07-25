@@ -1,4 +1,4 @@
-#Canned#
+#Canned
 
 A rewrite version of the [ruby2soap](https://github.com/ericman93/ruby2soap) gem.
 
