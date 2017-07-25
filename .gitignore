@@ -11,4 +11,4 @@
 # rspec failure tracking
 .rspec_status
 
-.docker-compose.yml
+docker-compose.yml
