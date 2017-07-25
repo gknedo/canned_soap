@@ -1,3 +1,5 @@
+module CannedSoap
+end
 require 'net/http'
 require 'xmlsimple'
 require 'canned_soap/wsdl/wsdl'
