@@ -48,51 +48,9 @@ client.IncreaseScore() #the cookies saved automaticly
 
 ### Complex type
 ```ruby
-client = WcfHandler.new('http://localhost:1659/Service1.svc')
+client = CannedSoap::Client.new('http://localhost:1659/Service1.svc')
 res = client.GetDataUsingDataContract(composite: {BoolValue: true, StringValue: "canedo_soap"})
 ```
-
-
-# Base Ruby2Soap Doc
-I started this project when I needed to call a WCF method which required cookies on init. Unfortunalty, I could not find any gem that will help me so, so I implemented it myself.
-
-While working I noticed that I need more features - authentication, for example.
-
-Please post any bugs, questions and feature requests using the 'Issues' page.
-
-Thank you,
-Eric
-
-
-## Examples
-
-### Initialize the handler
-
-```ruby
-handler = WcfHandler.new('http://www.webservicex.net/CurrencyConvertor.asmx')
-```
-
-### Simple objects
-```ruby
-handler.ConversionRate(:FromCurrency => 'ILS', :ToCurrency => 'GBP')
-```
-
-### Statefull
-```ruby
-  handler.Init(:userName => 'ericman93')
-  handler.IncreaseScore() #the cookies saved automaticly
-```
-
-### Complex type
-```ruby
-handler = WcfHandler.new('http://localhost:1659/Service1.svc')
-res = handler.GetDataUsingDataContract(:composite => {:BoolValue => true,:StringValue => "ruby2soap"})
-```
-
-## Result
-The object that the soap service function returns is actually a HTTP response with 'result' function that returns the actual value.
-If the value is a complex object, then it would be represented as a hash
-
 
 ## Authentication
 Available authentications
@@ -102,9 +60,9 @@ Available authentications
 
 ### NTLM Auth
 ```ruby
-handler.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password')
+client.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password')
 ```
 ### With domain
 ```ruby
-handler.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password','domain')
+client.ConversionRate({:FromCurrency => 'ILS', :ToCurrency => 'GBP'},SecutryProtocol::NTLM,'user','password','domain')
 ```
